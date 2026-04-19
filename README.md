@@ -22,11 +22,13 @@ pip install math-verify reasoning-gym mlflow
 
 ## Models
 
-We release the pre-RL intervention checkpoint used in Section 4:
+We release three pre-RL intervention checkpoints used in Section 4 on [HuggingFace](https://huggingface.co/pavelslab-nyu/rlvr-weak-supervision):
 
 | Model | Description | HuggingFace |
 |---|---|---|
-| Llama-3B-CPT-ThinkSFT | Llama-3.2-3B-Base + continual pre-training + thinking SFT | `[your-org]/Llama-3B-CPT-ThinkSFT` |
+| Llama-3B-CPT-ThinkSFT | Llama-3.2-3B-Base + continual pre-training + thinking SFT | [pavelslab-nyu/Llama-3B-CPT-ThinkSFT](https://huggingface.co/pavelslab-nyu/rlvr-weak-supervision) |
+| Llama-3B-CPT | Llama-3.2-3B-Base + continual pre-training | coming soon |
+| Llama-3B-ThinkSFT | Llama-3.2-3B-Base + thinking SFT | coming soon |
 
 Base models (Qwen2.5-Math-1.5B, Qwen2.5-1.5B, Llama-3.2-3B-Instruct) are available directly from HuggingFace.
 
@@ -85,25 +87,27 @@ bash scripts/train.sh
 
 **Section 4 — Pre-RL Intervention (CPT + Thinking SFT)**
 
+Download checkpoints from [HuggingFace](https://huggingface.co/pavelslab-nyu/rlvr-weak-supervision) and set `BASE_MODEL` accordingly.
+
 ```bash
-# Scarce data with thinking format reward
-BASE_MODEL=[your-org]/Llama-3B-CPT-ThinkSFT \
+# Scarce data
+BASE_MODEL=pavelslab-nyu/Llama-3B-CPT-ThinkSFT \
 REWARD_TYPE=RULE_BASED_THINKING_FORMAT \
 RES_LENGTH=8192 \
 TRAIN_DATA=data/math/train/llama-3b-think/sky_math_8.parquet \
 TOTAL_EPOCHS=3968 \
 bash scripts/train.sh
 
-# Noisy reward with thinking format reward
-BASE_MODEL=[your-org]/Llama-3B-CPT-ThinkSFT \
+# Noisy reward
+BASE_MODEL=pavelslab-nyu/Llama-3B-CPT-ThinkSFT \
 REWARD_TYPE=RULE_BASED_THINKING_FORMAT \
 RES_LENGTH=8192 \
 TRAIN_DATA=data/math/noisy/llama-3b-think/sky_math_2048_gamma0.70.parquet \
 TOTAL_EPOCHS=15 \
 bash scripts/train.sh
 
-# Majority vote proxy reward with thinking format
-BASE_MODEL=[your-org]/Llama-3B-CPT-ThinkSFT \
+# Majority vote proxy reward
+BASE_MODEL=pavelslab-nyu/Llama-3B-CPT-ThinkSFT \
 REWARD_TYPE=MAJORITY_VOTE_FORMAT_PENALTY \
 RES_LENGTH=8192 \
 TRAIN_DATA=data/math/train/llama-3b-think/sky_math_1024.parquet \

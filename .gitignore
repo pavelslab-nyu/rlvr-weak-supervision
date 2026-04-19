@@ -1,0 +1,89 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+open-prm/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.code-workspace
+
+# Ray
+/tmp/
+ray_results/
+ray_session_*/
+
+# Training outputs and logs
+*.log
+*.out
+mlflow/
+checkpoints/
+grpo_rollouts/
+outputs/
+test_code/
+*.ckpt
+*.safetensors
+*.bin
+
+# Model weights (if accidentally copied)
+model/
+*.pth
+*.pt
+*.onnx
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Temporary files
+.cache/
+*.pkl
+*.pickle
+debug_save/
+co_train*/
+novel_hybrid_model_family/
+
+# Archives
+*.tar.gz
+*.zip
+*.tar
+*.tgz
+
+# OS specific
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Large binary files
+*.whl
+*.wheel
+

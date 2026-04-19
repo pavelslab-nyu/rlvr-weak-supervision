@@ -2,7 +2,7 @@
 
 **Salman Rahman\*, Jingyan Shen\*, Anna Mordvina, Hamid Palangi, Saadia Gabriel, Pavel Izmailov**
 
-[\[Paper\]](https://arxiv.org/abs/XXXX.XXXXX) &nbsp; [\[Project Page\]](https://link/rlvr-weak-supervision) &nbsp; [\[Models\]](https://huggingface.co/pavelslab-nyu/rlvr-weak-supervision)
+<a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank">[Paper]</a> &nbsp; <a href="https://link/rlvr-weak-supervision" target="_blank">[Project Page]</a> &nbsp; <a href="https://huggingface.co/pavelslab-nyu/rlvr-weak-supervision" target="_blank">[Models]</a>
 
 We study when RLVR generalizes under weak supervision (scarce data, noisy rewards, proxy rewards) across Qwen and Llama models on Math, Science, and Graph domains. We find that generalization is governed by **saturation dynamics** — models with extended pre-saturation phases generalize from as few as 8 examples, while rapidly saturating models fail. The root cause of failure is **unfaithful reasoning**, not lack of diversity. **The fix:** continual pre-training + supervised fine-tuning on explicit reasoning traces before RL recovers generalization across all three settings.
 

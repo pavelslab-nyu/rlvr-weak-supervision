@@ -88,3 +88,4 @@ Thumbs.db
 *.wheel
 
 LLaMA-Factory/mid_train_sft_data/
+outputs/

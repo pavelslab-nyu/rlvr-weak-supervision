@@ -48,11 +48,13 @@ bash scripts/rl/train.sh
 
 **Section 3.1 — Scarce Data**
 
-Experiments vary the model, domain (Math / Science / Graph), and training set size `N` ∈ {8, 64, 512, 1024, 2048}. Data files follow the pattern `data/{domain}/train/{model}/sky_{domain}_{N}.parquet`. Epoch guide to keep total steps ~500: N=8 → 3968, N=64 → 496, N=512 → 62, N=1024 → 31, N=2048 → 15.
+Experiments vary the model, domain (Math / Science / Graph), and training set size `N` ∈ {8, 64, 512, 1024, 2048}. Epoch guide to keep total steps ~500: N=8 → 496 (8× upsampled), N=64 → 496, N=512 → 62, N=1024 → 31, N=2048 → 15.
+
+Example run (Science, N=1024):
 
 ```bash
 BASE_MODEL=Qwen/Qwen2.5-Math-1.5B \
-TRAIN_DATA=data/math/train/qwen-math-1.5b/sky_math_1024.parquet \
+TRAIN_DATA=data/science/train/qwen-math-1.5b/scp_1024.parquet \
 TOTAL_EPOCHS=31 \
 bash scripts/rl/train.sh
 ```
@@ -96,7 +98,7 @@ BASE_MODEL=pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT \
 REWARD_TYPE=RULE_BASED_THINKING_FORMAT \
 RES_LENGTH=8192 \
 TRAIN_DATA=data/math/train/llama-3b-think/sky_math_8.parquet \
-TOTAL_EPOCHS=3968 \
+TOTAL_EPOCHS=496 \
 bash scripts/rl/train.sh
 
 # Noisy reward

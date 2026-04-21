@@ -28,14 +28,15 @@ set -euo pipefail
 #    8192  for Thinking SFT models (Section 4)
 #
 #  TOTAL_EPOCHS guide — keeps total training steps ~500 regardless of dataset size:
-#    N=8: 3968 | N=64: 496 | N=512: 62 | N=1024: 31 | N=2048: 15
+#    N=8: 496 (8× upsampled) | N=64: 496 | N=512: 62 | N=1024: 31 | N=2048: 15
 #
 #  Paper experiment commands:
 #
 #  Section 3.1 — Scarce Data (replace N with: 8, 64, 512, 1024, 2048)
-#    BASE_MODEL=Qwen/Qwen2.5-Math-1.5B           TRAIN_DATA=data/math/train/qwen-math-1.5b/sky_math_N.parquet  TOTAL_EPOCHS=31  bash scripts/rl/train.sh
-#    BASE_MODEL=Qwen/Qwen2.5-1.5B                TRAIN_DATA=data/math/train/qwen-math-1.5b/sky_math_N.parquet  TOTAL_EPOCHS=31  bash scripts/rl/train.sh
-#    BASE_MODEL=meta-llama/Llama-3.2-3B-Instruct  TRAIN_DATA=data/math/train/llama-3b/sky_math_N.parquet       TOTAL_EPOCHS=31  bash scripts/rl/train.sh
+#  Data pattern: data/{math,science,graph}/train/{model}/{domain}_{N}.parquet
+#    BASE_MODEL=Qwen/Qwen2.5-Math-1.5B           TRAIN_DATA=data/science/train/qwen-math-1.5b/scp_N.parquet    TOTAL_EPOCHS=31  bash scripts/rl/train.sh
+#    BASE_MODEL=Qwen/Qwen2.5-1.5B                TRAIN_DATA=data/science/train/qwen-math-1.5b/scp_N.parquet    TOTAL_EPOCHS=31  bash scripts/rl/train.sh
+#    BASE_MODEL=meta-llama/Llama-3.2-3B-Instruct  TRAIN_DATA=data/science/train/llama-3b/scp_N.parquet         TOTAL_EPOCHS=31  bash scripts/rl/train.sh
 #
 #  Section 3.2 — Noisy Rewards (noise pre-applied in data, reward type stays RULE_BASED)
 #    BASE_MODEL=meta-llama/Llama-3.2-3B-Instruct  TRAIN_DATA=data/math/noisy/llama-3b-think/sky_math_2048_gamma0.70.parquet  TOTAL_EPOCHS=15  bash scripts/rl/train.sh
@@ -46,7 +47,7 @@ set -euo pipefail
 #
 #  Section 4 — Pre-RL Intervention: CPT + Thinking SFT (RES_LENGTH=8192)
 #  (Download pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT from HuggingFace — see README)
-#    BASE_MODEL=pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT  REWARD_TYPE=RULE_BASED_THINKING_FORMAT    RES_LENGTH=8192  TRAIN_DATA=data/math/train/llama-3b-think/sky_math_8.parquet              TOTAL_EPOCHS=3968  bash scripts/rl/train.sh
+#    BASE_MODEL=pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT  REWARD_TYPE=RULE_BASED_THINKING_FORMAT    RES_LENGTH=8192  TRAIN_DATA=data/math/train/llama-3b-think/sky_math_8.parquet              TOTAL_EPOCHS=496   bash scripts/rl/train.sh
 #    BASE_MODEL=pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT  REWARD_TYPE=MAJORITY_VOTE_FORMAT_PENALTY  RES_LENGTH=8192  TRAIN_DATA=data/math/train/llama-3b-think/sky_math_1024.parquet           TOTAL_EPOCHS=31    bash scripts/rl/train.sh
 #    BASE_MODEL=pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT  REWARD_TYPE=RULE_BASED_THINKING_FORMAT    RES_LENGTH=8192  TRAIN_DATA=data/math/noisy/llama-3b-think/sky_math_2048_gamma0.70.parquet  TOTAL_EPOCHS=15    bash scripts/rl/train.sh
 # =============================================================================

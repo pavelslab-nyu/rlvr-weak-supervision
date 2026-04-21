@@ -10,7 +10,7 @@
 <a href="https://huggingface.co/collections/pavelslab-nyu/rlvr-weak-supervision" target="_blank">[Models]</a>
 </p>
 
-We study when RLVR generalizes under weak supervision (scarce data, noisy rewards, proxy rewards) across Qwen and Llama models on Math, Science, and Graph domains. We find that generalization is governed by **saturation dynamics**. Models with extended pre-saturation phases generalize from as few as 8 examples, tolerating noisy rewards and even proxy rewards, while rapidly saturating models fail. The root cause of failure is **unfaithful reasoning**, not lack of diversity. **The fix:** continual pre-training combined with supervised fine-tuning on explicit reasoning traces before RL recovers generalization across all three weak supervision settings.
+We study when RLVR generalizes under weak supervision (scarce data, noisy rewards, proxy rewards) across Qwen and Llama models on Math, Science, and Graph domains. We find that generalization is governed by **saturation dynamics**. Models with extended pre-saturation phases generalize from as few as **8 examples**, tolerating noisy rewards and even proxy rewards, while rapidly saturating models fail. The root cause of failure is **unfaithful reasoning**, not lack of diversity. **The fix:** continual pre-training combined with supervised fine-tuning on explicit reasoning traces before RL recovers generalization across all three weak supervision settings.
 
 ---
 
@@ -38,27 +38,7 @@ We release three pre-RL intervention checkpoints used in Section 4 on [HuggingFa
 
 ---
 
-## Pre-RL Training: CPT + Thinking SFT (Section 4)
-
-Skip this if you use our released checkpoints from HuggingFace. Only needed to reproduce Section 4 from scratch.
-
-1. Register your dataset in `LLaMA-Factory/data/dataset_info.json`
-2. Set `model_name_or_path` and `output_dir` in the relevant config yaml under `scripts/cpt/` or `scripts/sft/`
-
-```bash
-# Step 1 — Continual pre-training on math data (produces Llama-3.2-3B-CPT-Math)
-bash scripts/cpt/cpt.sh
-
-# Step 2 — Thinking SFT (produces Llama-3.2-3B-CPT-Math-ThinkSFT or Llama-3.2-3B-ThinkSFT)
-bash scripts/sft/sft.sh
-
-# Non-thinking SFT variant
-THINK=false bash scripts/sft/sft.sh
-```
-
----
-
-## RL Training
+## Training
 
 All experiments use a single script with environment variable overrides:
 
@@ -85,7 +65,7 @@ Noise is pre-applied in the data files. Swap in the desired `gamma` level; `REWA
 
 ```bash
 BASE_MODEL=meta-llama/Llama-3.2-3B-Instruct \
-TRAIN_DATA=data/math/noisy/llama-3b/sky_math_2048_gamma0.70.parquet \
+TRAIN_DATA=data/math/noisy/llama-3b-think/sky_math_2048_gamma0.70.parquet \
 TOTAL_EPOCHS=15 \
 bash scripts/rl/train.sh
 ```
@@ -110,7 +90,21 @@ bash scripts/rl/train.sh
 
 **Section 4 — Pre-RL Intervention**
 
-Section 4 sweeps across model initializations (Instruct, ThinkSFT, CPT, CPT+ThinkSFT) and SFT types (thinking vs. non-thinking). Swap `BASE_MODEL` to reproduce each configuration. Thinking models require `RES_LENGTH=8192` and `REWARD_TYPE=RULE_BASED_THINKING_FORMAT`. Example commands for CPT+ThinkSFT (our released checkpoint):
+Section 4 sweeps across model initializations (Instruct, ThinkSFT, CPT, CPT+ThinkSFT) and SFT types (thinking vs. non-thinking).
+
+**Option A — Use our released checkpoints** (recommended): download from [HuggingFace](https://huggingface.co/collections/pavelslab-nyu/rlvr-weak-supervision) and set `BASE_MODEL` accordingly.
+
+**Option B — Reproduce from scratch**: update `model_name_or_path` and `output_dir` in the config yamls, then:
+
+```bash
+# Step 1 — Continual pre-training (produces Llama-3.2-3B-CPT-Math)
+bash scripts/cpt/cpt.sh
+
+# Step 2 — Thinking SFT (produces Llama-3.2-3B-CPT-Math-ThinkSFT or Llama-3.2-3B-ThinkSFT)
+bash scripts/sft/sft.sh
+```
+
+Then run RL. Thinking models require `RES_LENGTH=8192` and `REWARD_TYPE=RULE_BASED_THINKING_FORMAT`. Example commands for CPT+ThinkSFT:
 
 ```bash
 # Scarce data
@@ -147,8 +141,6 @@ See `scripts/rl/train.sh` for the full list of configurable options and `REWARD_
 Evaluate a trained checkpoint across multiple datasets:
 
 ```bash
-# Convert verl checkpoints to HuggingFace format first (see verl docs)
-
 # Reasoning/thinking model (8k response)
 CHECKPOINT_BASE=/path/to/checkpoints_hf_format \
 STEPS="100 200 300" \

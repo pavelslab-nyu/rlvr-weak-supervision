@@ -9,8 +9,8 @@
 # THINK=false — non-thinking format, 50k Nemotron math traces (cutoff 2048)
 #
 # Usage:
-#   LLAMA_FACTORY_DIR=/path/to/LLaMA-Factory bash scripts/sft.sh
-#   THINK=false LLAMA_FACTORY_DIR=/path/to/LLaMA-Factory bash scripts/sft.sh
+#   LLAMA_FACTORY_DIR=/path/to/LLaMA-Factory bash scripts/sft/sft.sh
+#   THINK=false LLAMA_FACTORY_DIR=/path/to/LLaMA-Factory bash scripts/sft/sft.sh
 #
 # Requirements: pip install llamafactory
 

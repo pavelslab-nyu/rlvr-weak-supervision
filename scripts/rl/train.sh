@@ -3,11 +3,11 @@ set -euo pipefail
 # GRPO training script for "When Can LLMs Learn to Reason with Weak Supervision?"
 #
 # Usage:
-#   bash scripts/train.sh
-#   DEBUG=True bash scripts/train.sh          # 1 GPU, small batches — quick sanity check
+#   bash scripts/rl/train.sh
+#   DEBUG=True bash scripts/rl/train.sh          # 1 GPU, small batches — quick sanity check
 #
 # Any variable in the configuration block below can be overridden from the shell:
-#   BASE_MODEL=... TRAIN_DATA=... bash scripts/train.sh
+#   BASE_MODEL=... TRAIN_DATA=... bash scripts/rl/train.sh
 
 # =============================================================================
 #  EXPERIMENT CONFIGURATION — modify only this section
@@ -33,22 +33,22 @@ set -euo pipefail
 #  Paper experiment commands:
 #
 #  Section 3.1 — Scarce Data (replace N with: 8, 64, 512, 1024, 2048)
-#    BASE_MODEL=Qwen/Qwen2.5-Math-1.5B        TRAIN_DATA=data/math/train/qwen-math-1.5b/sky_math_N.parquet  TOTAL_EPOCHS=31  bash scripts/train.sh
-#    BASE_MODEL=Qwen/Qwen2.5-1.5B             TRAIN_DATA=data/math/train/qwen-math-1.5b/sky_math_N.parquet  TOTAL_EPOCHS=31  bash scripts/train.sh
-#    BASE_MODEL=meta-llama/Llama-3.2-3B-Instruct  TRAIN_DATA=data/math/train/llama-3b/sky_math_N.parquet   TOTAL_EPOCHS=31  bash scripts/train.sh
+#    BASE_MODEL=Qwen/Qwen2.5-Math-1.5B           TRAIN_DATA=data/math/train/qwen-math-1.5b/sky_math_N.parquet  TOTAL_EPOCHS=31  bash scripts/rl/train.sh
+#    BASE_MODEL=Qwen/Qwen2.5-1.5B                TRAIN_DATA=data/math/train/qwen-math-1.5b/sky_math_N.parquet  TOTAL_EPOCHS=31  bash scripts/rl/train.sh
+#    BASE_MODEL=meta-llama/Llama-3.2-3B-Instruct  TRAIN_DATA=data/math/train/llama-3b/sky_math_N.parquet       TOTAL_EPOCHS=31  bash scripts/rl/train.sh
 #
 #  Section 3.2 — Noisy Rewards (noise pre-applied in data, reward type stays RULE_BASED)
-#    BASE_MODEL=meta-llama/Llama-3.2-3B-Instruct  TRAIN_DATA=data/math/noisy/llama-3b-think/sky_math_2048_gamma0.70.parquet  TOTAL_EPOCHS=15  bash scripts/train.sh
+#    BASE_MODEL=meta-llama/Llama-3.2-3B-Instruct  TRAIN_DATA=data/math/noisy/llama-3b-think/sky_math_2048_gamma0.70.parquet  TOTAL_EPOCHS=15  bash scripts/rl/train.sh
 #
 #  Section 3.3 — Proxy Rewards
-#    BASE_MODEL=Qwen/Qwen2.5-Math-1.5B  REWARD_TYPE=MAJORITY_VOTE   TRAIN_DATA=data/math/train/qwen-math-1.5b/sky_math_1024.parquet  TOTAL_EPOCHS=31  bash scripts/train.sh
-#    BASE_MODEL=Qwen/Qwen2.5-Math-1.5B  REWARD_TYPE=SELF_CERTAINTY  TRAIN_DATA=data/math/train/qwen-math-1.5b/sky_math_1024.parquet  TOTAL_EPOCHS=31  bash scripts/train.sh
+#    BASE_MODEL=Qwen/Qwen2.5-Math-1.5B  REWARD_TYPE=MAJORITY_VOTE   TRAIN_DATA=data/math/train/qwen-math-1.5b/sky_math_1024.parquet  TOTAL_EPOCHS=31  bash scripts/rl/train.sh
+#    BASE_MODEL=Qwen/Qwen2.5-Math-1.5B  REWARD_TYPE=SELF_CERTAINTY  TRAIN_DATA=data/math/train/qwen-math-1.5b/sky_math_1024.parquet  TOTAL_EPOCHS=31  bash scripts/rl/train.sh
 #
 #  Section 4 — Pre-RL Intervention: CPT + Thinking SFT (RES_LENGTH=8192)
-#  (Download Llama-3B-CPT-ThinkSFT from HuggingFace — see README)
-#    BASE_MODEL=[your-org]/Llama-3B-CPT-ThinkSFT  REWARD_TYPE=RULE_BASED_THINKING_FORMAT    RES_LENGTH=8192  TRAIN_DATA=data/math/train/llama-3b-think/sky_math_8.parquet              TOTAL_EPOCHS=3968  bash scripts/train.sh
-#    BASE_MODEL=[your-org]/Llama-3B-CPT-ThinkSFT  REWARD_TYPE=MAJORITY_VOTE_FORMAT_PENALTY  RES_LENGTH=8192  TRAIN_DATA=data/math/train/llama-3b-think/sky_math_1024.parquet           TOTAL_EPOCHS=31    bash scripts/train.sh
-#    BASE_MODEL=[your-org]/Llama-3B-CPT-ThinkSFT  REWARD_TYPE=RULE_BASED_THINKING_FORMAT    RES_LENGTH=8192  TRAIN_DATA=data/math/noisy/llama-3b-think/sky_math_2048_gamma0.70.parquet  TOTAL_EPOCHS=15    bash scripts/train.sh
+#  (Download pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT from HuggingFace — see README)
+#    BASE_MODEL=pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT  REWARD_TYPE=RULE_BASED_THINKING_FORMAT    RES_LENGTH=8192  TRAIN_DATA=data/math/train/llama-3b-think/sky_math_8.parquet              TOTAL_EPOCHS=3968  bash scripts/rl/train.sh
+#    BASE_MODEL=pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT  REWARD_TYPE=MAJORITY_VOTE_FORMAT_PENALTY  RES_LENGTH=8192  TRAIN_DATA=data/math/train/llama-3b-think/sky_math_1024.parquet           TOTAL_EPOCHS=31    bash scripts/rl/train.sh
+#    BASE_MODEL=pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT  REWARD_TYPE=RULE_BASED_THINKING_FORMAT    RES_LENGTH=8192  TRAIN_DATA=data/math/noisy/llama-3b-think/sky_math_2048_gamma0.70.parquet  TOTAL_EPOCHS=15    bash scripts/rl/train.sh
 # =============================================================================
 
 export DEBUG=${DEBUG:-False}

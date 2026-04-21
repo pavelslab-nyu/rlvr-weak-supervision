@@ -38,37 +38,34 @@ We release three pre-RL intervention checkpoints used in Section 4 on [HuggingFa
 
 ---
 
-## Training
+## RL Training
 
-All experiments are run with a single script. Set the variables for your experiment and run:
+All experiments use a single script with environment variable overrides:
 
 ```bash
-bash scripts/train.sh
+bash scripts/rl/train.sh
 ```
 
-**Section 3.1 — Scarce Data** (vary `N` over 8, 64, 512, 1024, 2048)
+**Section 3.1 — Scarce Data**
+
+Experiments vary the model, domain (Math / Science / Graph), and training set size `N` ∈ {8, 64, 512, 1024, 2048}. Data files follow the pattern `data/{domain}/train/{model}/sky_{domain}_{N}.parquet`. Epoch guide to keep total steps ~500: N=8 → 3968, N=64 → 496, N=512 → 62, N=1024 → 31, N=2048 → 15.
 
 ```bash
-# Qwen2.5-Math-1.5B on MATH
 BASE_MODEL=Qwen/Qwen2.5-Math-1.5B \
 TRAIN_DATA=data/math/train/qwen-math-1.5b/sky_math_1024.parquet \
 TOTAL_EPOCHS=31 \
-bash scripts/train.sh
-
-# Llama-3.2-3B-Instruct on MATH
-BASE_MODEL=meta-llama/Llama-3.2-3B-Instruct \
-TRAIN_DATA=data/math/train/llama-3b/sky_math_1024.parquet \
-TOTAL_EPOCHS=31 \
-bash scripts/train.sh
+bash scripts/rl/train.sh
 ```
 
-**Section 3.2 — Noisy Rewards** (noise is pre-applied in the data files; `gamma` controls label noise level)
+**Section 3.2 — Noisy Rewards**
+
+Noise is pre-applied in the data files. Swap in the desired `gamma` level; `REWARD_TYPE` stays `RULE_BASED`.
 
 ```bash
 BASE_MODEL=meta-llama/Llama-3.2-3B-Instruct \
-TRAIN_DATA=data/math/noisy/llama-3b-think/sky_math_2048_gamma0.70.parquet \
+TRAIN_DATA=data/math/noisy/llama-3b/sky_math_2048_gamma0.70.parquet \
 TOTAL_EPOCHS=15 \
-bash scripts/train.sh
+bash scripts/rl/train.sh
 ```
 
 **Section 3.3 — Proxy Rewards**
@@ -79,19 +76,19 @@ BASE_MODEL=Qwen/Qwen2.5-Math-1.5B \
 REWARD_TYPE=MAJORITY_VOTE \
 TRAIN_DATA=data/math/train/qwen-math-1.5b/sky_math_1024.parquet \
 TOTAL_EPOCHS=31 \
-bash scripts/train.sh
+bash scripts/rl/train.sh
 
 # Self-certainty
 BASE_MODEL=Qwen/Qwen2.5-Math-1.5B \
 REWARD_TYPE=SELF_CERTAINTY \
 TRAIN_DATA=data/math/train/qwen-math-1.5b/sky_math_1024.parquet \
 TOTAL_EPOCHS=31 \
-bash scripts/train.sh
+bash scripts/rl/train.sh
 ```
 
 **Section 4 — Pre-RL Intervention (CPT + Thinking SFT)**
 
-Download checkpoints from [HuggingFace](https://huggingface.co/collections/pavelslab-nyu/rlvr-weak-supervision) and set `BASE_MODEL` accordingly.
+Download checkpoints from [HuggingFace](https://huggingface.co/collections/pavelslab-nyu/rlvr-weak-supervision). Use `RES_LENGTH=8192` and `REWARD_TYPE=RULE_BASED_THINKING_FORMAT` for thinking models.
 
 ```bash
 # Scarce data
@@ -100,7 +97,7 @@ REWARD_TYPE=RULE_BASED_THINKING_FORMAT \
 RES_LENGTH=8192 \
 TRAIN_DATA=data/math/train/llama-3b-think/sky_math_8.parquet \
 TOTAL_EPOCHS=3968 \
-bash scripts/train.sh
+bash scripts/rl/train.sh
 
 # Noisy reward
 BASE_MODEL=pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT \
@@ -108,7 +105,7 @@ REWARD_TYPE=RULE_BASED_THINKING_FORMAT \
 RES_LENGTH=8192 \
 TRAIN_DATA=data/math/noisy/llama-3b-think/sky_math_2048_gamma0.70.parquet \
 TOTAL_EPOCHS=15 \
-bash scripts/train.sh
+bash scripts/rl/train.sh
 
 # Majority vote proxy reward
 BASE_MODEL=pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT \
@@ -116,10 +113,10 @@ REWARD_TYPE=MAJORITY_VOTE_FORMAT_PENALTY \
 RES_LENGTH=8192 \
 TRAIN_DATA=data/math/train/llama-3b-think/sky_math_1024.parquet \
 TOTAL_EPOCHS=31 \
-bash scripts/train.sh
+bash scripts/rl/train.sh
 ```
 
-See `scripts/train.sh` for the full list of configurable options and `REWARD_TYPE` descriptions.
+See `scripts/rl/train.sh` for the full list of configurable options and `REWARD_TYPE` descriptions.
 
 ---
 

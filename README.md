@@ -38,6 +38,26 @@ We release three pre-RL intervention checkpoints used in Section 4 on [HuggingFa
 
 ---
 
+## Pre-RL Training: CPT + Thinking SFT (Section 4)
+
+Skip this if you use our released checkpoints from HuggingFace. Only needed to reproduce Section 4 from scratch.
+
+1. Register your dataset in `LLaMA-Factory/data/dataset_info.json`
+2. Set `model_name_or_path` and `output_dir` in the relevant config yaml under `scripts/cpt/` or `scripts/sft/`
+
+```bash
+# Step 1 — Continual pre-training on math data (produces Llama-3.2-3B-CPT-Math)
+bash scripts/cpt/cpt.sh
+
+# Step 2 — Thinking SFT (produces Llama-3.2-3B-CPT-Math-ThinkSFT or Llama-3.2-3B-ThinkSFT)
+bash scripts/sft/sft.sh
+
+# Non-thinking SFT variant
+THINK=false bash scripts/sft/sft.sh
+```
+
+---
+
 ## RL Training
 
 All experiments use a single script with environment variable overrides:
@@ -88,9 +108,9 @@ TOTAL_EPOCHS=31 \
 bash scripts/rl/train.sh
 ```
 
-**Section 4 — Pre-RL Intervention (CPT + Thinking SFT)**
+**Section 4 — Pre-RL Intervention**
 
-Download checkpoints from [HuggingFace](https://huggingface.co/collections/pavelslab-nyu/rlvr-weak-supervision). Use `RES_LENGTH=8192` and `REWARD_TYPE=RULE_BASED_THINKING_FORMAT` for thinking models.
+Section 4 sweeps across model initializations (Instruct, ThinkSFT, CPT, CPT+ThinkSFT) and SFT types (thinking vs. non-thinking). Swap `BASE_MODEL` to reproduce each configuration. Thinking models require `RES_LENGTH=8192` and `REWARD_TYPE=RULE_BASED_THINKING_FORMAT`. Example commands for CPT+ThinkSFT (our released checkpoint):
 
 ```bash
 # Scarce data

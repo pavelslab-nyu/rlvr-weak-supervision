@@ -81,7 +81,9 @@ export SAVE_DIR=${SAVE_DIR:-"outputs"}
 
 # --- GPUs ---
 # Set to a comma-separated list of GPU indices, e.g. "0,1,2,3" or "4,5,6,7"
-export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"0,1,2,3"}
+# export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"0,1,2,3"}
+export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"4,5,6,7"}
+
 
 # =============================================================================
 #  DERIVED SETTINGS — do not modify below this line

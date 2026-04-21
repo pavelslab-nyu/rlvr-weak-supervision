@@ -22,7 +22,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"0,1,2,3"}
 
 # Cache
-export HF_HOME=${HF_HOME:-"/local2/salman/reward_signal_data/hf_cache"}
+export HF_HOME=${HF_HOME:-"$HOME/.cache/huggingface"}
 export HF_DATASETS_CACHE="${HF_HOME}/datasets"
 export TORCH_HOME="${HF_HOME}/torch"
 export TOKENIZERS_PARALLELISM=false
@@ -35,10 +35,10 @@ export NCCL_DEBUG=WARN
 
 if [ "${THINK}" = "true" ]; then
     CONFIG="${SCRIPT_DIR}/sft_think_config.yaml"
-    OUTPUT_DIR=${OUTPUT_DIR:-"/local2/salman/model/sft_model/llama_3b_think_sft"}
+    OUTPUT_DIR=${OUTPUT_DIR:-"sft_think_output"}
 else
     CONFIG="${SCRIPT_DIR}/sft_non_think_config.yaml"
-    OUTPUT_DIR=${OUTPUT_DIR:-"/local2/salman/model/sft_model/llama_3b_non_think_sft"}
+    OUTPUT_DIR=${OUTPUT_DIR:-"sft_non_think_output"}
 fi
 
 mkdir -p "${OUTPUT_DIR}/logs"

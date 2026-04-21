@@ -15,7 +15,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"0,1,2,3"}
 
 # Cache
-export HF_HOME=${HF_HOME:-"/local2/salman/reward_signal_data/hf_cache"}
+export HF_HOME=${HF_HOME:-"$HOME/.cache/huggingface"}
 export HF_DATASETS_CACHE="${HF_HOME}/datasets"
 export TORCH_HOME="${HF_HOME}/torch"
 export TOKENIZERS_PARALLELISM=false
@@ -26,7 +26,7 @@ export NCCL_P2P_DISABLE=1
 export NCCL_IB_DISABLE=1
 export NCCL_DEBUG=WARN
 
-OUTPUT_DIR=${OUTPUT_DIR:-"/local2/salman/model/pretrain_model/llama_3b_cpt_math"}
+OUTPUT_DIR=${OUTPUT_DIR:-"cpt_output"}
 mkdir -p "${OUTPUT_DIR}/logs"
 
 cd "${LLAMA_FACTORY_DIR}"

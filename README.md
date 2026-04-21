@@ -1,8 +1,7 @@
 # When Can LLMs Learn to Reason with Weak Supervision?
 
 <p align="center">
-<b>Salman Rahman*, Jingyan Shen*, Anna Mordvina, Hamid Palangi, Saadia Gabriel, Pavel Izmailov</b><br>
-UCLA &nbsp;·&nbsp; NYU &nbsp;·&nbsp; Google
+<b>Salman Rahman*, Jingyan Shen*, Anna Mordvina, Hamid Palangi, Saadia Gabriel, Pavel Izmailov</b>
 </p>
 
 <p align="center">
@@ -11,7 +10,7 @@ UCLA &nbsp;·&nbsp; NYU &nbsp;·&nbsp; Google
 <a href="https://huggingface.co/collections/pavelslab-nyu/rlvr-weak-supervision" target="_blank">[Models]</a>
 </p>
 
-We study when RLVR generalizes under weak supervision (scarce data, noisy rewards, proxy rewards) across Qwen and Llama models on Math, Science, and Graph domains. We find that generalization is governed by **saturation dynamics** — models with extended pre-saturation phases generalize from as few as 8 examples, while rapidly saturating models fail. The root cause of failure is **unfaithful reasoning**, not lack of diversity. **The fix:** continual pre-training + supervised fine-tuning on explicit reasoning traces before RL recovers generalization across all three settings.
+We study when RLVR generalizes under weak supervision (scarce data, noisy rewards, proxy rewards) across Qwen and Llama models on Math, Science, and Graph domains. We find that generalization is governed by saturation dynamics. Models with extended pre-saturation phases generalize from as few as 8 examples, while rapidly saturating models fail. The root cause of failure is unfaithful reasoning, not lack of diversity. **The fix:** continual pre-training combined with supervised fine-tuning on explicit reasoning traces before RL recovers generalization across all three weak supervision settings.
 
 ---
 

@@ -1,8 +1,15 @@
 # When Can LLMs Learn to Reason with Weak Supervision?
 
-**Salman Rahman\*, Jingyan Shen\*, Anna Mordvina, Hamid Palangi, Saadia Gabriel, Pavel Izmailov**
+<p align="center">
+<b>Salman Rahman*, Jingyan Shen*, Anna Mordvina, Hamid Palangi, Saadia Gabriel, Pavel Izmailov</b><br>
+UCLA &nbsp;·&nbsp; NYU &nbsp;·&nbsp; Google
+</p>
 
-<a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank">[Paper]</a> &nbsp; <a href="https://link/rlvr-weak-supervision" target="_blank">[Project Page]</a> &nbsp; <a href="https://huggingface.co/pavelslab-nyu/rlvr-weak-supervision" target="_blank">[Models]</a>
+<p align="center">
+<a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank">[Paper]</a> &nbsp;&nbsp;
+<a href="https://salmanrahman.net/rlvr-weak-supervision" target="_blank">[Project Page]</a> &nbsp;&nbsp;
+<a href="https://huggingface.co/collections/pavelslab-nyu/rlvr-weak-supervision" target="_blank">[Models]</a>
+</p>
 
 We study when RLVR generalizes under weak supervision (scarce data, noisy rewards, proxy rewards) across Qwen and Llama models on Math, Science, and Graph domains. We find that generalization is governed by **saturation dynamics** — models with extended pre-saturation phases generalize from as few as 8 examples, while rapidly saturating models fail. The root cause of failure is **unfaithful reasoning**, not lack of diversity. **The fix:** continual pre-training + supervised fine-tuning on explicit reasoning traces before RL recovers generalization across all three settings.
 
@@ -22,13 +29,13 @@ pip install math-verify reasoning-gym mlflow
 
 ## Models
 
-We release three pre-RL intervention checkpoints used in Section 4 on [HuggingFace](https://huggingface.co/pavelslab-nyu/rlvr-weak-supervision):
+We release three pre-RL intervention checkpoints used in Section 4 on [HuggingFace](https://huggingface.co/collections/pavelslab-nyu/rlvr-weak-supervision):
 
 | Model | Description | HuggingFace |
 |---|---|---|
-| Llama-3B-CPT-ThinkSFT | Llama-3.2-3B-Base + continual pre-training + thinking SFT | [pavelslab-nyu/Llama-3B-CPT-ThinkSFT](https://huggingface.co/pavelslab-nyu/rlvr-weak-supervision) |
-| Llama-3B-CPT | Llama-3.2-3B-Base + continual pre-training | coming soon |
-| Llama-3B-ThinkSFT | Llama-3.2-3B-Base + thinking SFT | coming soon |
+| Llama-3.2-3B-CPT-Math-ThinkSFT | Llama-3.2-3B + continual pre-training + thinking SFT | [pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT](https://huggingface.co/pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT) |
+| Llama-3.2-3B-CPT-Math | Llama-3.2-3B + continual pre-training | [pavelslab-nyu/Llama-3.2-3B-CPT-Math](https://huggingface.co/pavelslab-nyu/Llama-3.2-3B-CPT-Math) |
+| Llama-3.2-3B-ThinkSFT | Llama-3.2-3B + thinking SFT (no CPT) | [pavelslab-nyu/Llama-3.2-3B-ThinkSFT](https://huggingface.co/pavelslab-nyu/Llama-3.2-3B-ThinkSFT) |
 
 Base models (Qwen2.5-Math-1.5B, Qwen2.5-1.5B, Llama-3.2-3B-Instruct) are available directly from HuggingFace.
 
@@ -87,11 +94,11 @@ bash scripts/train.sh
 
 **Section 4 — Pre-RL Intervention (CPT + Thinking SFT)**
 
-Download checkpoints from [HuggingFace](https://huggingface.co/pavelslab-nyu/rlvr-weak-supervision) and set `BASE_MODEL` accordingly.
+Download checkpoints from [HuggingFace](https://huggingface.co/collections/pavelslab-nyu/rlvr-weak-supervision) and set `BASE_MODEL` accordingly.
 
 ```bash
 # Scarce data
-BASE_MODEL=pavelslab-nyu/Llama-3B-CPT-ThinkSFT \
+BASE_MODEL=pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT \
 REWARD_TYPE=RULE_BASED_THINKING_FORMAT \
 RES_LENGTH=8192 \
 TRAIN_DATA=data/math/train/llama-3b-think/sky_math_8.parquet \
@@ -99,7 +106,7 @@ TOTAL_EPOCHS=3968 \
 bash scripts/train.sh
 
 # Noisy reward
-BASE_MODEL=pavelslab-nyu/Llama-3B-CPT-ThinkSFT \
+BASE_MODEL=pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT \
 REWARD_TYPE=RULE_BASED_THINKING_FORMAT \
 RES_LENGTH=8192 \
 TRAIN_DATA=data/math/noisy/llama-3b-think/sky_math_2048_gamma0.70.parquet \
@@ -107,7 +114,7 @@ TOTAL_EPOCHS=15 \
 bash scripts/train.sh
 
 # Majority vote proxy reward
-BASE_MODEL=pavelslab-nyu/Llama-3B-CPT-ThinkSFT \
+BASE_MODEL=pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT \
 REWARD_TYPE=MAJORITY_VOTE_FORMAT_PENALTY \
 RES_LENGTH=8192 \
 TRAIN_DATA=data/math/train/llama-3b-think/sky_math_1024.parquet \

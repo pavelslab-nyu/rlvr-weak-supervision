@@ -90,11 +90,13 @@ bash scripts/rl/train.sh
 
 **Section 4 — Pre-RL Intervention**
 
-Section 4 sweeps across model initializations (Instruct, ThinkSFT, CPT, CPT+ThinkSFT) and SFT types (thinking vs. non-thinking).
+Section 4 sweeps across model initializations (Base, ThinkSFT, CPT, CPT+ThinkSFT) and SFT types (thinking vs. non-thinking).
 
 **Option A — Use our released checkpoints** (recommended): download from [HuggingFace](https://huggingface.co/collections/pavelslab-nyu/rlvr-weak-supervision) and set `BASE_MODEL` accordingly.
 
-**Option B — Reproduce from scratch**: update `model_name_or_path` and `output_dir` in the config yamls, then:
+**Option B — Reproduce from scratch**:
+1. Register your datasets in `LLaMA-Factory/data/dataset_info.json` (CPT data for Step 1, SFT traces for Step 2)
+2. Update `model_name_or_path` and `output_dir` in the config yamls under `scripts/cpt/` and `scripts/sft/`
 
 ```bash
 # Step 1 — Continual pre-training (produces Llama-3.2-3B-CPT-Math)
@@ -166,9 +168,7 @@ python3 eval/pass_k_eval.py \
 
 ## Faithfulness Analysis
 
-We measure reasoning faithfulness — whether the model's chain-of-thought genuinely drives its final answer — following the perturbation-based protocol described in Section 4 of the paper.
-
-Code and instructions coming soon in `faithfulness_analysis/`.
+We measure reasoning faithfulness, whether the model's chain-of-thought logically supports its final answer, using an LLM-as-a-judge framework (details in Section 3.4 of the paper). Code and instructions coming soon in `faithfulness_analysis/`.
 
 ---
 

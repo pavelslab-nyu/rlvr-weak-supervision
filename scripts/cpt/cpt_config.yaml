@@ -15,7 +15,7 @@ cutoff_len: 2048
 overwrite_cache: true
 preprocessing_num_workers: 16
 dataloader_num_workers: 4
-cache_dir: /local2/salman/reward_signal_data/hf_cache
+cache_dir: ~/.cache/huggingface
 
 ### output
 output_dir: /path/to/output/llama_3b_cpt_math

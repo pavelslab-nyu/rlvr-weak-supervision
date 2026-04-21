@@ -65,7 +65,7 @@ Noise is pre-applied in the data files. Swap in the desired `gamma` level; `REWA
 
 ```bash
 BASE_MODEL=meta-llama/Llama-3.2-3B-Instruct \
-TRAIN_DATA=data/math/noisy/llama-3b-think/sky_math_2048_gamma0.70.parquet \
+TRAIN_DATA=data/math/noisy/llama-3b/sky_math_2048_gamma0.70.parquet \
 TOTAL_EPOCHS=15 \
 bash scripts/rl/train.sh
 ```

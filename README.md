@@ -33,7 +33,7 @@ We release three pre-RL intervention checkpoints used in Section 4 on [HuggingFa
 | Model | Description | HuggingFace |
 |---|---|---|
 | Llama-3.2-3B-CPT-Math-ThinkSFT | Llama-3.2-3B + continual pre-training (52B math tokens) + thinking SFT | [pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT](https://huggingface.co/pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT) |
-| Llama-3.2-3B-CPT-Math | Llama-3.2-3B + continual pre-training | [pavelslab-nyu/Llama-3.2-3B-CPT-Math](https://huggingface.co/pavelslab-nyu/Llama-3.2-3B-CPT-Math) |
+| Llama-3.2-3B-CPT-Math | Llama-3.2-3B + continual pre-training (52B math tokens) | [pavelslab-nyu/Llama-3.2-3B-CPT-Math](https://huggingface.co/pavelslab-nyu/Llama-3.2-3B-CPT-Math) |
 | Llama-3.2-3B-ThinkSFT | Llama-3.2-3B + thinking SFT (no CPT) | [pavelslab-nyu/Llama-3.2-3B-ThinkSFT](https://huggingface.co/pavelslab-nyu/Llama-3.2-3B-ThinkSFT) |
 
 ---

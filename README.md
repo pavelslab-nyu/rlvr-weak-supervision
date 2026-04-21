@@ -10,7 +10,7 @@
 <a href="https://huggingface.co/collections/pavelslab-nyu/rlvr-weak-supervision" target="_blank">[Models]</a>
 </p>
 
-We study when RLVR generalizes under weak supervision (scarce data, noisy rewards, proxy rewards) across Qwen and Llama models on Math, Science, and Graph domains. We find that generalization is governed by saturation dynamics. Models with extended pre-saturation phases generalize from as few as 8 examples, while rapidly saturating models fail. The root cause of failure is unfaithful reasoning, not lack of diversity. **The fix:** continual pre-training combined with supervised fine-tuning on explicit reasoning traces before RL recovers generalization across all three weak supervision settings.
+We study when RLVR generalizes under weak supervision (scarce data, noisy rewards, proxy rewards) across Qwen and Llama models on Math, Science, and Graph domains. We find that generalization is governed by **saturation dynamics**. Models with extended pre-saturation phases generalize from as few as 8 examples, tolerating noisy rewards and even proxy rewards, while rapidly saturating models fail. The root cause of failure is **unfaithful reasoning**, not lack of diversity. **The fix:** continual pre-training combined with supervised fine-tuning on explicit reasoning traces before RL recovers generalization across all three weak supervision settings.
 
 ---
 
@@ -32,11 +32,9 @@ We release three pre-RL intervention checkpoints used in Section 4 on [HuggingFa
 
 | Model | Description | HuggingFace |
 |---|---|---|
-| Llama-3.2-3B-CPT-Math-ThinkSFT | Llama-3.2-3B + continual pre-training + thinking SFT | [pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT](https://huggingface.co/pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT) |
+| Llama-3.2-3B-CPT-Math-ThinkSFT | Llama-3.2-3B + continual pre-training (52B math tokens) + thinking SFT | [pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT](https://huggingface.co/pavelslab-nyu/Llama-3.2-3B-CPT-Math-ThinkSFT) |
 | Llama-3.2-3B-CPT-Math | Llama-3.2-3B + continual pre-training | [pavelslab-nyu/Llama-3.2-3B-CPT-Math](https://huggingface.co/pavelslab-nyu/Llama-3.2-3B-CPT-Math) |
 | Llama-3.2-3B-ThinkSFT | Llama-3.2-3B + thinking SFT (no CPT) | [pavelslab-nyu/Llama-3.2-3B-ThinkSFT](https://huggingface.co/pavelslab-nyu/Llama-3.2-3B-ThinkSFT) |
-
-Base models (Qwen2.5-Math-1.5B, Qwen2.5-1.5B, Llama-3.2-3B-Instruct) are available directly from HuggingFace.
 
 ---
 

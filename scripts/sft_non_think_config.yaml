@@ -1,0 +1,48 @@
+### model
+# Input: CPT model (cpt_config.yaml output_dir) for the non-thinking SFT variant.
+model_name_or_path: /path/to/llama_3b_cpt_math
+
+### method
+stage: sft
+do_train: true
+finetuning_type: full
+deepspeed: examples/deepspeed/ds_z2_config.json  # path relative to LLaMA-Factory root
+enable_liger_kernel: true
+packing: false
+
+### dataset
+# Same 43k samples as sft_think_config.yaml, but with <think>...</think> tags stripped
+dataset: open_thoughts_43k_non_think_format  # register in LLaMA-Factory/data/dataset_info.json
+template: llama3
+cutoff_len: 2048
+overwrite_cache: true
+preprocessing_num_workers: 16
+dataloader_persistent_workers: true
+dataloader_pin_memory: true
+dataloader_num_workers: 4
+
+### output
+output_dir: /path/to/output/llama_3b_non_think_sft
+logging_steps: 10
+save_steps: 200
+save_total_limit: 5
+plot_loss: true
+overwrite_output_dir: false
+report_to: mlflow
+run_name: llama_3b_non_think_sft
+
+### train
+# Effective batch size: 2 × 32 × 4 GPUs = 256
+# 43k samples / 256 ≈ 168 steps/epoch × 3 epochs ≈ 504 total steps
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 32
+learning_rate: 1.5e-5
+num_train_epochs: 3.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+weight_decay: 0.01
+bf16: true
+ddp_timeout: 180000000
+gradient_checkpointing: true
+flash_attn: fa2
+resume_from_checkpoint: null

@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-<a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank">[Paper]</a> &nbsp;&nbsp;
+<a href="https://arxiv.org/abs/2604.18574" target="_blank">[Paper]</a> &nbsp;&nbsp;
 <a href="https://salmanrahman.net/rlvr-weak-supervision" target="_blank">[Project Page]</a> &nbsp;&nbsp;
 <a href="https://huggingface.co/collections/pavelslab-nyu/rlvr-weak-supervision" target="_blank">[Models]</a>
 </p>
@@ -175,10 +175,13 @@ We measure reasoning faithfulness, whether the model's chain-of-thought logicall
 ## Citation
 
 ```bibtex
-@article{rahman2026rlvr,
-  title     = {When Can LLMs Learn to Reason with Weak Supervision?},
-  author    = {Rahman, Salman and Shen, Jingyan and Mordvina, Anna and Palangi, Hamid and Gabriel, Saadia and Izmailov, Pavel},
-  journal   = {arXiv preprint},
-  year      = {2026}
+@misc{rahman2026llmslearnreasonweak,
+      title={When Can LLMs Learn to Reason with Weak Supervision?}, 
+      author={Salman Rahman and Jingyan Shen and Anna Mordvina and Hamid Palangi and Saadia Gabriel and Pavel Izmailov},
+      year={2026},
+      eprint={2604.18574},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2604.18574}, 
 }
 ```
